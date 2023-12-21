@@ -20,7 +20,6 @@ public partial class UserServiceTests
                 broker.InsertUserAsync(inputUser))
                     .ReturnsAsync(persistedUser);
         
-
         //when
 
         User actualUser = 
@@ -28,5 +27,10 @@ public partial class UserServiceTests
         
         //then
         actualUser.Should().BeEquivalentTo(expectedUser);
+        this.storageBrokerMock.Verify(broker=>
+            broker.InsertUserAsync(inputUser), Times.Once);
+        
+        this.storageBrokerMock.VerifyNoOtherCalls();
+        this.loggingBrokerMock.VerifyNoOtherCalls();
     }
 }

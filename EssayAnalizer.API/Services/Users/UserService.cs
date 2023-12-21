@@ -17,6 +17,8 @@ public class UserService : IUserService
         this.loggingBroker = loggingBroker;
     }
 
-    public ValueTask<User> AddUserAsync(User user) =>
-        throw new NotImplementedException();
+    public async ValueTask<User> AddUserAsync(User user)
+    {
+        return await this.storageBroker.InsertUserAsync(user);
+    }
 }
