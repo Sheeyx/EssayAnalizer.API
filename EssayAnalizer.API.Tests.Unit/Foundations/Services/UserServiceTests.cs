@@ -1,9 +1,11 @@
+using System.Linq.Expressions;
 using EssayAnalizer.API.Brokers.Loggings;
 using EssayAnalizer.API.Brokers.Storages;
 using EssayAnalizer.API.Models.Users;
 using EssayAnalizer.API.Services.Users;
 using Moq;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace EssayAnalizer.API.Tests.Unit.Foundations.Services;
 
@@ -22,7 +24,9 @@ public partial class UserServiceTests
             storageBroker: this.storageBrokerMock.Object,
             loggingBroker: this.loggingBrokerMock.Object);
     }
-    
+
+    private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+        actualException => actualException.SameExceptionAs(expectedException);
     private static User CreateRandomUser()=>
         CreateUserFiller().Create();
     
