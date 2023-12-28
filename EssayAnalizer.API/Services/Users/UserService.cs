@@ -1,10 +1,11 @@
 using EssayAnalizer.API.Brokers.Loggings;
 using EssayAnalizer.API.Brokers.Storages;
 using EssayAnalizer.API.Models.Users;
+using EssayAnalizer.API.Models.Users.Exceptions;
 
 namespace EssayAnalizer.API.Services.Users;
 
-public class UserService : IUserService
+public partial class UserService : IUserService
 {
     private readonly IStorageBroker storageBroker;
     private readonly ILoggingBroker loggingBroker;
@@ -17,8 +18,13 @@ public class UserService : IUserService
         this.loggingBroker = loggingBroker;
     }
 
-    public async ValueTask<User> AddUserAsync(User user)
-    {
-        return await this.storageBroker.InsertUserAsync(user);
-    }
+    public ValueTask<User> AddUserAsync(User user) =>
+        TryCatch(async () =>
+        {
+            ValidateUserOnAdd(user);
+            return await this.storageBroker.InsertUserAsync(user);
+
+        });
+
+
 }
