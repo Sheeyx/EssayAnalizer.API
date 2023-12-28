@@ -2,6 +2,7 @@ using EssayAnalizer.API.Brokers.Loggings;
 using EssayAnalizer.API.Brokers.Storages;
 using EssayAnalizer.API.Models.Users;
 using EssayAnalizer.API.Models.Users.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EssayAnalizer.API.Services.Users;
 
@@ -25,6 +26,16 @@ public partial class UserService : IUserService
             return await this.storageBroker.InsertUserAsync(user);
 
         });
+
+    public IQueryable<User> GetAllUsers()
+    {
+        return this.storageBroker.SelectAllUsers();
+    }
+    
+    public async ValueTask<User> ModifyUserAsync(User user)
+    {
+        throw new NotImplementedException();
+    }
 
 
 }
