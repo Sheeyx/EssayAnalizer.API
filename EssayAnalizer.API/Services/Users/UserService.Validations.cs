@@ -50,6 +50,11 @@ public partial class UserService
             throw new NotFoundUserException(userId);
         }
     }
+    
+    private void ValidateUserId(Guid userId)
+    {
+        Validate((Rule: isInvalid(userId), Parameter: nameof(userId)));
+    }
     private static void ValidateAgainstStorageUserOnModify(User user, User storageUser)
     {
         ValidateStorageUser(storageUser, user.Id);
