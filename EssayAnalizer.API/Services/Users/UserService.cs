@@ -44,5 +44,15 @@ public partial class UserService : IUserService
         return await this.storageBroker.UpdateUserAsync(user);
     }
 
+    public async ValueTask<User> RemoveUserAsync(Guid userId)
+    {
+        ValidateUserId(userId);
+
+        User user = await this.storageBroker.SelectUserByIdAsync(userId);
+
+        return await this.storageBroker.DeleteUserAsync(user);
+    }
+
+
 
 }
